@@ -1,14 +1,5 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-
-#============================
-
-## @file
-## @author Daiju Kanaoka
-## @brief XELA uskin sensorのデータパブリッシュノード
-
-#============================
-
  
 import sys
 import os
@@ -16,11 +7,10 @@ import rospy
 import roslib
 import rosparam
 import serial
-import pprint
 
-from uskin_sensor_msgs.msg import UskinSensorValue
-from uskin_sensor_msgs.msg import UskinSensorValueArray
-from uskin_sensor_srv.srv import UskinSensorReset
+from uskin_sensor.msg import UskinSensorValue
+from uskin_sensor.msg import UskinSensorValueArray
+from uskin_sensor.srv import UskinSensorReset
 
 #==================================================
 
@@ -47,6 +37,7 @@ class UskinSensor(object):
         #==================================================
         self.node_name = rospy.get_name()
         self.port = rosparam.get_param( self.node_name + "/port")
+        # self.port = "/dev/ttyACM0"
 
 
         #==================================================
@@ -95,6 +86,9 @@ class UskinSensor(object):
         while not(get_result) and not(rospy.is_shutdown()):
             # データ読み取り
             sensor_value = self._uskin_sensor_serial.readline()
+
+            sensor_value = sensor_value.decode()
+
 
             # 不要な要素の削除
             sensor_value = sensor_value.strip("\rA")

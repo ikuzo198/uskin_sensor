@@ -1,7 +1,7 @@
 
 <launch> 
-    <node pkg="uskin_sensor_pkg" name="uskin_sensor_node" type="uskin_sensor_value_node.py" output="screen">
+    <node pkg="uskin_sensor" name="uskin_sensor_node" type="uskin_sensor_value_node.py" output="screen">
         <param name="port" type="str" value="/dev/ttyACM0" />
     </node>
-    <node pkg="uskin_sensor_pkg" name="uskin_sensor_sub" type="uskin_sensor_sub.py" output="screen" />
+    <node pkg="uskin_sensor" name="uskin_sensor_sub" type="uskin_sensor_sub.py" output="screen" />
 </launch>

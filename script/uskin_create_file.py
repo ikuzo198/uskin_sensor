@@ -6,8 +6,8 @@ import numpy as np
 import rospy
 import pickle
 
-from uskin_sensor_msgs.msg import UskinSensorValue
-from uskin_sensor_msgs.msg import UskinSensorValueArray
+from uskin_sensor.msg import UskinSensorValue
+from uskin_sensor.msg import UskinSensorValueArray
 
 
 count = 0
@@ -51,7 +51,7 @@ def output_file(raw_data, output_file_path="./", output_file_name="output", exte
     """
     print("file name:")
     output_file_name = input()
-    raw_input(">>")
+    input(">>")
     
     output_name = output_file_path + output_file_name + extension
     
@@ -60,7 +60,7 @@ def output_file(raw_data, output_file_path="./", output_file_name="output", exte
 
     print("==FIN DUMP==")
     
-    raw_input(">>")
+    input(">>")
 
 
 def callback(data):
@@ -79,5 +79,5 @@ def listener():
     
 
 if __name__ == '__main__':
-    raw_input("PLEASE ENTER >>")
+    input("PLEASE ENTER >>")
     listener()

@@ -2,7 +2,6 @@
 # -*- coding: utf-8 -*-
 
 
-
 import numpy as np
 import rospy, smach
 import pickle
