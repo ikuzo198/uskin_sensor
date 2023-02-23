@@ -5,13 +5,15 @@
 import numpy as np
 import rospy
 import pickle
+import glob
 
 from uskin_sensor.msg import UskinSensorValue
 from uskin_sensor.msg import UskinSensorValueArray
 
 
+counter = 0
 count = 0
-time_steps = 200
+time_steps = 300
 sensor_nums = 16
 data_list = [[[] for sensor_num in range(sensor_nums)] for time_step in range(time_steps)]
 
@@ -33,8 +35,10 @@ def preprocess(raw_data):
     
 
     for sensor_num in range(sensor_nums):
-        data_list[count][sensor_num] = raw_data[sensor_num].x, raw_data[sensor_num].y, raw_data[sensor_num].z
-
+        try:
+            data_list[count][sensor_num] = raw_data[sensor_num].x, raw_data[sensor_num].y, raw_data[sensor_num].z
+        except Exception as e:
+            rospy.signal_shutdown(e)
     count += 1
     return np.array(data_list)
 
@@ -49,18 +53,22 @@ def output_file(raw_data, output_file_path="./", output_file_name="output", exte
         extension (string): 書き出す拡張子名
         
     """
-    print("file name:")
-    output_file_name = input()
-    input(">>")
+    # global counter
+    counter = len(glob.glob(output_file_path + "*" + extension))
+    # print("file name:")
+    # output_file_name = input()
+    output_file_name = str(counter)
+    # input(">>")
     
     output_name = output_file_path + output_file_name + extension
-    
+    print("HERE:", output_name)
     with open(output_name, 'wb') as f:
         pickle.dump(raw_data, f)
 
     print("==FIN DUMP==")
+    counter += 1
     
-    input(">>")
+    # input(">>")
 
 
 def callback(data):
@@ -69,7 +77,7 @@ def callback(data):
 
     print(count)
     if count == time_steps:
-        output_file(raw_data=preprocess_raw_data, output_file_path="./src/uskin_sensor_pkgs/uskin_sensor_pkg/pkl/")
+        output_file(raw_data=preprocess_raw_data, output_file_path="/root/ros_ws/hsr_environments/src/uskin_sensor/data/Tactile/")
 
 
 def listener():
@@ -79,5 +87,5 @@ def listener():
     
 
 if __name__ == '__main__':
-    input("PLEASE ENTER >>")
+    # input("PLEASE ENTER >>")
     listener()

@@ -7,9 +7,9 @@ import numpy as np
 import pickle
 import matplotlib.pyplot as plt
 
-PATH = "../pkl/"
+PATH = "/root/ros_ws/hsr_environments/src/uskin_sensor/data/Tactile/"
 
-DATAPATH = PATH + "rabit_00.pkl"
+DATAPATH = PATH + "7.pkl"
 # DATAPATH = PATH + "test00.pkl"
 
 with open(DATAPATH, 'rb')as f:
@@ -29,7 +29,7 @@ x = np.linspace(0, timesteps, timesteps)
 # プロット
 plt.plot(x, data_list, label="00", color="blue")
 
-DATAPATH = PATH + "rabit_01.pkl"
+# DATAPATH = PATH + "rabit_01.pkl"
 with open(DATAPATH, 'rb')as f:
     raw_data = pickle.load(f)
 
@@ -42,7 +42,7 @@ for timestep in range(timesteps):
 # プロット
 plt.plot(x, data_list, label="01", color="red")
 
-DATAPATH = PATH + "rabit_02.pkl"
+# DATAPATH = PATH + "rabit_02.pkl"
 with open(DATAPATH, 'rb')as f:
     raw_data = pickle.load(f)
 
@@ -61,4 +61,4 @@ plt.plot(x, data_list, label="02", color="green")
 plt.legend()
 
 # プロット表示(設定の反映)
-plt.show()
+plt.savefig(f'{PATH}a.jpg')
