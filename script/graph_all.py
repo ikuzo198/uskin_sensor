@@ -9,8 +9,8 @@ import numpy as np
 import pickle, os
 import matplotlib.pyplot as plt
 
-PATH = "../pkl/rabit/"
-sensor_point = 4
+PATH = "/root/ros_ws/hsr_environments/src/uskin_sensor/data//Tactile/"
+sensor_point = 0
 
 filename_list = os.listdir(PATH)
 color_list = ("blue", "red", "green")
@@ -37,13 +37,13 @@ def add_graph():
         plt.plot(x, data_list, label=filename, color="blue")
 
 
-def spread_graph():
+def spread_graph(axis_set=0,name="0"):
     row = 0
     culum = 0
     sensor_points = 16
-    filename = "rabit02.pkl"
+    filename = name + ".pkl"
     axis = ["x", "y", "z"]
-    axis_num = 2
+    axis_num = axis_set
 
     fig, axes = plt.subplots(4,4)
 
@@ -57,11 +57,9 @@ def spread_graph():
 
         for timestep in range(timesteps):
             data_list.append(raw_data[timestep][sensor_point][axis_num])
-            
         print("timesteps:", timesteps)
 
         x = np.linspace(0, timesteps, timesteps)
-
         print("row:", row)
         print("cumlu:", culum)
         # プロット
@@ -69,7 +67,7 @@ def spread_graph():
         # plt.ylim(-100, 650)
 
         axes[row, culum].plot(x, data_list, label=filename+"("+axis[axis_num]+")", color="blue")
-        axes[row, culum].set_ylim(-15,50)
+        # axes[row, culum].set_ylim(-15,50)
         culum += 1
 
         if culum >= 4:
@@ -86,11 +84,18 @@ def spread_graph():
 
 if __name__ == "__main__":
     # add_graph()
-    spread_graph()
+    for num in range(3):
+    # num = 2
+        name = str(11)
 
-    # 凡例の表示woodblock
-    # plt.legend()
+        spread_graph(num, name)
+        
+        axis_list = ["x", "y", "z"]
+        axis = axis_list[num]
 
-    # プロット表示(設定の反映)
-    
-    plt.show()
+        # 凡例の表示woodblock
+        # plt.legend()
+
+        # プロット表示(設定の反映)
+        # rosrun tam_hsr_utils get_joint_states_node.py
+        plt.savefig(f'{PATH}{name}_{axis}.jpg')
