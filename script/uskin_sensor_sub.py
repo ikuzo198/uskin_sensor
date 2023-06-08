@@ -5,8 +5,8 @@
 import numpy as np
 import rospy
 
-from uskin_sensor_msgs.msg import UskinSensorValue
-from uskin_sensor_msgs.msg import UskinSensorValueArray
+from uskin_sensor.msg import UskinSensorValue
+from uskin_sensor.msg import UskinSensorValueArray
 
 
 def callback(data):
