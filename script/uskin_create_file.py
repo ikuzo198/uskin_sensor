@@ -10,10 +10,11 @@ import glob
 from uskin_sensor.msg import UskinSensorValue
 from uskin_sensor.msg import UskinSensorValueArray
 
+# from hsrlib.hsrif import HSRInterfaces
 
 counter = 0
 count = 0
-time_steps = 300
+time_steps = 100
 sensor_nums = 16
 data_list = [[[] for sensor_num in range(sensor_nums)] for time_step in range(time_steps)]
 
@@ -77,7 +78,7 @@ def callback(data):
 
     print(count)
     if count == time_steps:
-        output_file(raw_data=preprocess_raw_data, output_file_path="/root/ros_ws/hsr_environments/src/uskin_sensor/data/Tactile/")
+        output_file(raw_data=preprocess_raw_data, output_file_path="/root/im_ws/hsrc/datasets/normal/tmp/Tactile/")
 
 
 def listener():
